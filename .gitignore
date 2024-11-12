@@ -1,0 +1,9 @@
+#eclipse
+.classpath
+.project
+.DS_Store
+target/
+.settings/
+test-output/
+/bin/
+allure-results
