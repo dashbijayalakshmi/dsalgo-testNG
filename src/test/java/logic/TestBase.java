@@ -3,21 +3,31 @@ package logic;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.Properties;
 
 import org.apache.log4j.BasicConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.IAnnotationTransformer;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.ITestAnnotation;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import pageObjects.Signinpageobjects;
 import pageObjects.landingpageobjects;
@@ -31,23 +41,30 @@ public class TestBase
 	landingpageobjects landingpage;
 	Signinpageobjects signinpage;
 	static DriverFactory driverfactorypage;
-	ConfigReader configreaderfile;
+	ConfigReader configreaderfile;	
+	protected static WebDriver driver;
+	private By getStarted = By.linkText("Get Started");
+	ExtentSparkReporter htmlReporter;
+	static ExtentReports extent;
+	public ExtentTest test;
+	
+    static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(DriverFactory.class);
+   
+	
 	
 	public TestBase() {
 		// Set up a simple configuration that logs on the console.
 	    BasicConfigurator.configure();
 	}
 	
-	protected static WebDriver driver;
-	private By getStarted = By.linkText("Get Started");
-    static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(DriverFactory.class);
-	
-//    @BeforeMethod
-//    @Parameters({"browser"})
-//	public void adefineBrowser(@Optional("chrome") String browser) throws Throwable {
-//		//ConfigReader.setBrowserType(browser);
-//		System.out.println(browser);
-//	}
+	//To generate Extent Report
+	@BeforeSuite
+	public void extentreportsetup()
+	{
+		extent = new ExtentReports();
+		extent.attachReporter(new ExtentSparkReporter("extententReport.html"));
+	}
+    
     
 	@BeforeMethod
 	@Parameters("browser")
@@ -55,7 +72,6 @@ public class TestBase
 	{	
 		driverfactorypage = new DriverFactory();
 		driver = driverfactorypage.initializeDrivers(browser);
-		//driverfactorypage.getdriver();
 		logger.info("Initializing driver for : " + browser);
 	}
 	
@@ -86,11 +102,23 @@ public class TestBase
 		
 	}
 	
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void after()
 	{
 		System.out.println("Closing the browser");
 		driver.quit();
+		//extent.flush();
 	}
+	
+	@AfterSuite
+	public void flushExtent()
+	{
+		extent.flush();
+	}
+	
+	
+
+	
+	
 	
 }
