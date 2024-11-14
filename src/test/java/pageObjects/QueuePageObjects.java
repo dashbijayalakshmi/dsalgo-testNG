@@ -54,6 +54,9 @@ public class QueuePageObjects {
 		    //Actions actions;
 			
 		}
+		public String get_Title() {
+			return driver.getTitle();
+		}
 		public void btnGetStartQueue() {
 			driver.findElement(btnGetStartQueue).click();
 		}
