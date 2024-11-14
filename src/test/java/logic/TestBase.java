@@ -3,11 +3,16 @@ package logic;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -33,6 +38,7 @@ import pageObjects.Signinpageobjects;
 import pageObjects.landingpageobjects;
 import utils.ConfigReader;
 import utils.DriverFactory;
+import utils.ExcelReader;
 import utils.TestContextSetup;
 
 public class TestBase 
@@ -49,6 +55,7 @@ public class TestBase
 	public ExtentTest test;
 	
     static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(DriverFactory.class);
+    
    
 	
 	
@@ -99,6 +106,7 @@ public class TestBase
 	public Object [][] dataprovider_method()
 	{
 		return new Object[][] {{"ninjatesterss" , "ninja@123"}};
+		
 		
 	}
 	

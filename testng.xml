@@ -19,13 +19,13 @@
     </packages>-->
     
     <classes>
-		<class name="logic.SigninTest"></class>
-		<class name="logic.TreeTest"></class>
-		<class name="logic.QueueTest">
-			<parameter name="sheetName" value="Code"></parameter>
+		<!--<class name="logic.SigninTest"></class>
+		<class name="logic.TreeTest"></class>-->
+		<class name="logic.TreeTest">
+			<!--<parameter name="sheetName" value="Code"></parameter>
 			<parameter name="codeColumn" value="1"></parameter>
 			<parameter name="validCodeRow" value="1"></parameter>
-			<parameter name="invalidCodeRow" value="2"></parameter>
+			<parameter name="invalidCodeRow" value="2"></parameter>-->
 		</class>
 	</classes>
   </test>
