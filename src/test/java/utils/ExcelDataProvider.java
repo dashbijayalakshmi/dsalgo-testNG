@@ -12,19 +12,24 @@ import org.testng.annotations.DataProvider;
 
 public class ExcelDataProvider 
 {
-	@DataProvider(name="login")
-	public static Object[][] getLoginData() throws IOException
-	{
-		//Create object and pass sheet name
-		Object[][] data = ExcelDataProvider.readDataFromExcel("LoginData");
-		return data;
-	}
+	
+	
 	
 	@DataProvider(name="Code")
 	public static Object[][] getPythonCode() throws IOException
 	{
 		//Create object and pass sheet name
 		Object[][] data = ExcelDataProvider.readDataFromExcel("Code");
+		return data;
+	}
+	
+	
+	
+	@DataProvider(name="login")
+	public static Object[][] getLoginData() throws IOException
+	{
+		//Create object and pass sheet name
+		Object[][] data = ExcelDataProvider.readDataFromExcel("LoginData");
 		return data;
 	}
 	
@@ -40,7 +45,7 @@ public class ExcelDataProvider
 		int rows = sheet.getLastRowNum(); //1
 		int cols = sheet.getRow(0).getLastCellNum();//1
 		
-		Object[][]data = new Object[rows][cols];
+		Object[][]data = new Object[rows][cols]; // 1 1 
 		
 		//for rows
 		for (int i=0; i<rows; i++)
@@ -51,9 +56,9 @@ public class ExcelDataProvider
 			for (int j=0; j<cols; j++)
 			{
 				XSSFCell cell = row.getCell(j);
-				CellType cellType = cell.getCellType();
 				
 				//Check type of the values available in cells 
+				CellType cellType = cell.getCellType();
 				switch (cellType)
 				{
 					case STRING:

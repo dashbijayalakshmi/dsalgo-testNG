@@ -1,7 +1,10 @@
 package logic;
 
 
+import static org.testng.Assert.assertEquals;
+
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -26,16 +29,22 @@ public class SigninTest extends TestBase
 	
 	
 	@Test(dataProvider="login" ,dataProviderClass=ExcelDataProvider.class)
-	public void getlogindatafromExcel(String username, String password) throws InterruptedException
+	public void getlogindatafromExcel(String username, String password) 
 	{
 		driver.findElement(By.cssSelector("#id_username")).sendKeys(username);
-		Thread.sleep(3000);
 		driver.findElement(By.id("id_password")).sendKeys(password);
-		Thread.sleep(3000);
 		signinpage.click_login_btn();
-		Thread.sleep(3000);
 	}
 	
+	@Test
+	public void tc01_vfailedtcfromsignin() 
+	{	
+		int a =1;
+		int b=2;
+		Assert.assertEquals(a, b);
+		System.out.println("Failed test case from signin");
+		
+	}
 	
 //	@Test(dataProvider = "Logindataprovider" , dataProviderClass=TestBase.class)
 //	public void tc01_loginusingdataprovider(String username, String password) 

@@ -1,44 +1,39 @@
 package logic;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.BasicConfigurator;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hpsf.Date;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.IAnnotationTransformer;
+import org.openqa.selenium.devtools.v128.page.model.FileHandler;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.ITestAnnotation;
-import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import pageObjects.Signinpageobjects;
 import pageObjects.landingpageobjects;
 import utils.ConfigReader;
 import utils.DriverFactory;
-import utils.ExcelReader;
+import utils.ExtentReportSetup;
 import utils.TestContextSetup;
 
 public class TestBase 
@@ -47,6 +42,7 @@ public class TestBase
 	landingpageobjects landingpage;
 	Signinpageobjects signinpage;
 	static DriverFactory driverfactorypage;
+	ExtentReportSetup extReportSetup;
 	ConfigReader configreaderfile;	
 	protected static WebDriver driver;
 	private By getStarted = By.linkText("Get Started");
@@ -70,8 +66,9 @@ public class TestBase
 	{
 		extent = new ExtentReports();
 		extent.attachReporter(new ExtentSparkReporter("extententReport.html"));
+		
 	}
-    
+
     
 	@BeforeMethod
 	@Parameters("browser")
@@ -109,12 +106,33 @@ public class TestBase
 		
 		
 	}
-	
+	//Close the browser and set extent report status
 	@AfterMethod(alwaysRun = true)
-	public void after()
+	public void after(ITestResult result)
 	{
 		System.out.println("Closing the browser");
-		driver.quit();
+		driver.quit();	
+		
+		if (result.getStatus() == ITestResult.FAILURE) {
+	        test.log(Status.FAIL,
+	                MarkupHelper.createLabel(result.getName()
+	                        + " Test case FAILED due to below issues:",
+	                        ExtentColor.RED));
+	        test.fail(result.getThrowable());
+	        test.addScreenCaptureFromPath(System.getProperty("user.dir")+"/ScreenShot","failed test case");
+	        
+	    } else if (result.getStatus() == ITestResult.SUCCESS) {
+	        test.log(
+	                Status.PASS,
+	                MarkupHelper.createLabel(result.getName()
+	                        + " Test Case PASSED", ExtentColor.GREEN));
+	    } else {
+	        test.log(
+	                Status.SKIP,
+	                MarkupHelper.createLabel(result.getName()
+	                        + " Test Case SKIPPED", ExtentColor.ORANGE));
+	        test.skip(result.getThrowable());
+	    }
 		//extent.flush();
 	}
 	
@@ -125,8 +143,8 @@ public class TestBase
 	}
 	
 	
-
 	
+
 	
 	
 }
