@@ -5,12 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.time.Duration;
 import java.util.Properties;
 
 import org.apache.log4j.BasicConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.testng.IAnnotationTransformer;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -37,20 +41,20 @@ import utils.TestContextSetup;
 
 public class TestBase 
 {
-	TestContextSetup testcontextsetup;
+	
 	landingpageobjects landingpage;
 	Signinpageobjects signinpage;
-	static DriverFactory driverfactorypage;
+    DriverFactory driverfactorypage;
 	ConfigReader configreaderfile;	
-	protected static WebDriver driver;
+    protected WebDriver driver;
 	private By getStarted = By.linkText("Get Started");
 	ExtentSparkReporter htmlReporter;
 	static ExtentReports extent;
 	public ExtentTest test;
 	
-    static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(DriverFactory.class);
-   
 	
+    static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(DriverFactory.class);
+  
 	
 	public TestBase() {
 		// Set up a simple configuration that logs on the console.
@@ -72,26 +76,24 @@ public class TestBase
 	{	
 		driverfactorypage = new DriverFactory();
 		driver = driverfactorypage.initializeDrivers(browser);
-		logger.info("Initializing driver for : " + browser);
+		System.out.println(driver);
+
+		
+		String path = System.getProperty("user.dir") + "/src/test/resources/global.properties";
+        FileInputStream fis = new FileInputStream(path);
+       Properties prop = new Properties();
+       prop.load(fis);
+       String url = prop.getProperty("URL");
+		driver.get(url);
+	System.out.println("Opening the url from properties file");
+		driver.findElement(getStarted).click();		
 	}
 	
-	@BeforeMethod
-	public void cbefore() throws IOException
-	{
-		System.out.println("Launching the browser");
-		String path = System.getProperty("user.dir") + "/src/test/resources/global.properties";
-		FileInputStream fis = new FileInputStream(path);
-		Properties prop = new Properties();
-		prop.load(fis);
-		String url = prop.getProperty("URL");
-		driver.get(url);
-		System.out.println("Opening the url from properties file");
-		driver.findElement(getStarted).click();
-	}
+
 	
 	public static WebDriver getdriver()
 	{
-		return driver;
+		return DriverFactory.getdriver();
 		
 	}
 	
