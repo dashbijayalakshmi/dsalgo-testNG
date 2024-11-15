@@ -21,6 +21,7 @@ public class DataStructureTest extends TestBase
 		@BeforeMethod()
 		public void login()
 		{
+			test = extent.createTest("Test cases from the Data Structure module");
 			signinpage = new Signinpageobjects(driver);
 			signinpage.click_signin_link();
 			signinpage.enter_username("ninjatesterss");
@@ -40,7 +41,8 @@ public class DataStructureTest extends TestBase
 //}
 
 
-		@Test
+		@Test(retryAnalyzer=logic.RetryAnalyzer.class)
+		
 		public void tc01_reqDataStructtopics() throws InterruptedException
 		{
 			datastructpageobj.datastructures_topics_covered_section();

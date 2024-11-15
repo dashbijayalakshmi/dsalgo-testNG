@@ -2,15 +2,19 @@ package logic;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import pageObjects.Run_PythonCodes;
 import pageObjects.Signinpageobjects;
 import pageObjects.StackPageObject;
-import pageObjects.TreePageObjects;
+
 
 public class StackTest extends TestBase {
 	Signinpageobjects signinpage;
@@ -36,7 +40,17 @@ public class StackTest extends TestBase {
 //		driver.get().findElement(By.id("id_password")).sendKeys(password);
 //		signinpage.get().click_login_btn();	
 //	}
-
+	@Test(retryAnalyzer=logic.RetryAnalyzer.class)
+	public void tc01_reqtreeltopics() throws InterruptedException
+	{
+		StackPageObject stackpageobj = new StackPageObject(driver);
+		stackpageobj.stack_topics_covered_section();
+		List<String> Expected_list = Arrays.asList("Overview of Trees","Terminologies","Types of Trees","Tree Traversals","Traversals-Illustration","Binary Trees","Types of Binary Trees","Implementation in Python","Binary Tree Traversals","Implementation of Binary Trees","Applications of Binary trees","Binary Search Trees","Implementation Of BST");
+		List<String> Actual_list = stackpageobj.stack_topicscovered_list();
+		System.out.println("Expected List is:" + Expected_list);
+		System.out.println("Actual List is:" + Actual_list);
+		Assert.assertEquals(Expected_list, Actual_list, "List is not present");
+	}
 	@Test(retryAnalyzer=logic.RetryAnalyzer.class)
 	public void tc02_oot_page() 
 	{
@@ -58,7 +72,7 @@ public class StackTest extends TestBase {
 	}
 	
 
-@Test
+	@Test(retryAnalyzer=logic.RetryAnalyzer.class)
 public void tc04_validPyhtoncode_oot()
 {
 	stackpageobj.click_operations_in_Stack();

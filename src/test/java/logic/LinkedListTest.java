@@ -20,6 +20,7 @@ public class LinkedListTest extends TestBase
 	@BeforeMethod()
 	public void login()
 	{
+		test = extent.createTest("Test cases from the Linked List module");
 		signinpage = new Signinpageobjects(driver);
 		signinpage.click_signin_link();
 		signinpage.enter_username("ninjatesterss");
