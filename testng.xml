@@ -1,47 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<!--<suite name="Suite">
-  <test thread-count="5" name="Test">
-    <classes>
-      <class name="logic.LoginPage"/>
-      <class name="logic.Hooks"/>
-    </classes>
-  </test> 
-</suite> -->
-
-<!-- just change parallel="tests" for cross browser testing-->
-<suite name="Suite" thread-count="1">
-<parameter name="browser" value="HtmlRunner"/>
-<test name="TestChrome">
-    <parameter name="browser" value="chrome" />
-    <!--<packages>
-      <package name="logic"/>
-    </packages>-->
-    
-    <classes>
-		<class name="logic.SigninTest"></class>
-		<class name="logic.TreeTest"></class>
-		<class name="logic.QueueTest">
-			<parameter name="sheetName" value="Code"></parameter>
-			<parameter name="codeColumn" value="1"></parameter>
-			<parameter name="validCodeRow" value="1"></parameter>
-			<parameter name="invalidCodeRow" value="2"></parameter>
-		</class>
-	</classes>
-  </test>
-  
-
-<!--<test thread-count="1" name="Testfirefox">
-		<parameter name="browser" value="firefox" />
-		<packages>
-      <package name="logic"/>
-    </packages>
-	</test>-->
-
-<!--<test thread-count="3" name="Testedge">
+<suite name="All Test Suite" parallel="true" thread-count="3">
+	<test name="Testing on Chrome">
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name="logic.StackTest" />
+		</classes>
+	</test>
+	<test name="Testing on Edge">
 		<parameter name="browser" value="edge" />
-		<packages>
-      <package name="logic"/>
-    </packages>
-	</test>--> 
+		<classes>
+			<class name="logic.StackTest" />
+		</classes>
+	</test>
+	<test name="Testing on Firefox">
+		<parameter name="browser" value="firefox" />
+		<classes>
+			<class name="logic.StackTest" />
+		</classes>
+	</test>
+	<!-- <test name="Testing on safari">
+			<parameter name="browser" value="safari"/>
+	
+			<classes>
+				
+				<class name="logic.StackTest"/>
+				</classes>
+		</test>-->
 </suite>

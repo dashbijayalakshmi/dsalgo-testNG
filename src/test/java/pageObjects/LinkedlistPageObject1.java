@@ -84,6 +84,11 @@ public DriverFactory driverfactory;
 	{
 		driver.findElement(Introduction).click();
 	}
+	public String get_Title() {
+		return driver.getTitle();
+	}
+	
+
 
 	public void click_TryHere_from_IntroductionofLinkedlist()
 	{
