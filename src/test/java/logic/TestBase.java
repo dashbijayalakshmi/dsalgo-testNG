@@ -25,6 +25,7 @@ import pageObjects.Signinpageobjects;
 import pageObjects.landingpageobjects;
 import utils.ConfigReader;
 import utils.DriverFactory;
+import utils.ExtentReport;
 
 public class TestBase 
 {
@@ -62,7 +63,7 @@ public class TestBase
 		
 	}
 
-    
+	 
 	@BeforeMethod
 	@Parameters("browser")
 	public void bbefore(String browser) throws Throwable
@@ -99,7 +100,7 @@ public class TestBase
 	}
 	//Close the browser and set extent report status
 	@AfterMethod(alwaysRun = true)
-	public void after(ITestResult result)
+	public void after(ITestResult result) throws Exception
 	{
 		System.out.println("Closing the browser");
 		driver.quit();	
@@ -110,7 +111,8 @@ public class TestBase
 	                        + " Test case FAILED due to below issues:",
 	                        ExtentColor.RED));
 	        test.fail(result.getThrowable());
-	        test.addScreenCaptureFromPath(System.getProperty("user.dir")+"/ScreenShot","failed test case");
+	        String screenshotPath = ExtentReport.getScreenshot(driver, result.getName());
+	        //test.addScreenCaptureFromPath(System.getProperty("user.dir")+"/ScreenShot","failed test case");
 	        
 	    } else if (result.getStatus() == ITestResult.SUCCESS) {
 	        test.log(

@@ -6,7 +6,7 @@
 	<test name="Testing on Chrome">
 		<parameter name="browser" value="chrome" />
 		<classes>
-			<class name="logic.RegistrationTest" />
+			<class name="logic.SigninTest" />
 		</classes>
 	</test>
 	<!--<test name="Testing on Edge">
