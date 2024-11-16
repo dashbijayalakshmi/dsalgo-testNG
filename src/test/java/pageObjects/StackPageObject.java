@@ -51,9 +51,9 @@ public DriverFactory driverfactory;
 	
 	WebDriver driver;
 	public StackPageObject(WebDriver driver) {
-		//this.driver=driver;
-		driverfactory=new DriverFactory();
-		this.driver=driverfactory.getdriver();	
+		this.driver=driver;
+		//driverfactory=new DriverFactory();
+		//this.driver=driverfactory.getdriver();	
 	}
 	
 	public void click_stack_getstarted()
@@ -95,6 +95,10 @@ public DriverFactory driverfactory;
 	{
 		driver.findElement(run_stack).click();
 	}
+	public String get_Title() {
+		return driver.getTitle();
+	}
+	
 	
 	public void Ouptput_OperationsinStack()
 	{
@@ -138,7 +142,7 @@ public DriverFactory driverfactory;
 	  
    public void click_tryHere_on_Implementation()
    { 
-	driver.findElement(TryHere_implementation).click();
+	   driver.findElement(TryHere_implementation).click();
     }
    public void validcode_editor_out_implementation()
    {
@@ -150,7 +154,7 @@ public DriverFactory driverfactory;
    }
    public void run_implementation()
    {
-	 driver.findElement(run_implementation).click();
+	   driver.findElement(run_implementation).click();
    }
    public void Ouptput_implementation()
    {
@@ -175,7 +179,7 @@ public DriverFactory driverfactory;
 
   public void goback_frmTryeditor_of_Implemenetation()
   { 
-	driver.navigate().back();
+	  driver.navigate().back();
   }
   public void contents_on_outpage_Implementation()
   {
@@ -188,12 +192,12 @@ public DriverFactory driverfactory;
   }
   public void click_applications()
  {
-	driver.findElement(applications).click();
+	  driver.findElement(applications).click();
  }
 
   public void click_TryHere_from_applications()
   {
-	driver.findElement(TryHere_in_applications).click();
+	  driver.findElement(TryHere_in_applications).click();
   }
 
 public void validcode_editor_out()
@@ -234,7 +238,7 @@ public void contents_on_outpage()
 		
 }
 public void click_Practice_Questions() {
-driver.findElement(PracticeQuestion).click();
+	driver.findElement(PracticeQuestion).click();
 
 }
 	
@@ -248,7 +252,7 @@ public void show_output() {
 	
 }
   public void click_PracticeQuestion() {
-	driver.findElement(PracticeQuestion).click();
+	  driver.findElement(PracticeQuestion).click();
 }
 public void is_practiceQuestion_Displayed() {
 boolean content = driver.getPageSource().contains("Practice Questions.....");
@@ -277,7 +281,7 @@ public void click_tryHereApplication() {
 
 public void run_button() {
 	
-		driver.findElement(btnrun).click();
+	driver.findElement(btnrun).click();
 	}
 	
 }

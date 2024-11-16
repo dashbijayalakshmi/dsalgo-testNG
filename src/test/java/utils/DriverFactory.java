@@ -8,6 +8,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+import lombok.Synchronized;
+
 public class DriverFactory {
 	private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 
@@ -22,6 +24,7 @@ public class DriverFactory {
 			logger.info("Testing on chrome");
 			// driver = new ChromeDriver();
 			driver.set(new ChromeDriver());
+			
 
 		}
 
@@ -54,7 +57,7 @@ public class DriverFactory {
 
 	}
 
-	public WebDriver getdriver() {
+	public static synchronized WebDriver getdriver() {
 
 		return driver.get();
 	}

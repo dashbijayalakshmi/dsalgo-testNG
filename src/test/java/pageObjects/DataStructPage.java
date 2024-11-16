@@ -71,6 +71,10 @@ public class DataStructPage {
 
 		driver.navigate().back();
 	}
+	public String get_Title() {
+		return driver.getTitle();
+	}
+	
 
 	public void contents_outpage() {
 		boolean content = driver.findElement(content_out).isDisplayed();

@@ -59,10 +59,10 @@ public class TreeTest extends TestBase
 		Assert.assertEquals(Expected_list, Actual_list, "List is not present");
 	}
 	
-	@Test
+	@Test(retryAnalyzer=logic.RetryAnalyzer.class)
 	public void tc02_oot_page() 
 	{
-		//test = extent.createTest("Tree TC1" , "tree tc1");	
+			
 		treepageobj.click_overview_of_tree();
 		String actualtitle = treepageobj.get_Title();
 		String expectedtitle = "Overview of Trees";
