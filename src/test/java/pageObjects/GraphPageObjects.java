@@ -47,6 +47,9 @@ public class GraphPageObjects {
 		driverfactory=new DriverFactory();
 		this.driver=driverfactory.getdriver();	
 	}
+	public String get_Title() {
+		return driver.getTitle();
+	}
 	public void btnGetStartGraph() {
 		driver.findElement(btnGetStartgraph).click();
 	}

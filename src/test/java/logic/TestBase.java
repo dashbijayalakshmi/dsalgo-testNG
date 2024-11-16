@@ -95,8 +95,6 @@ public class TestBase
 	public Object [][] dataprovider_method()
 	{
 		return new Object[][] {{"ninjatesterss" , "ninja@123"}};
-		
-		
 	}
 	//Close the browser and set extent report status
 	@AfterMethod(alwaysRun = true)
