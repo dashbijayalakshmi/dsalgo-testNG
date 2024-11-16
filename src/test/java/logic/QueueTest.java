@@ -2,25 +2,32 @@ package logic;
 
 import static org.testng.Assert.assertEquals;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import utils.ExcelReader;
+import data.CommonDataProvider;
 import pageObjects.QueuePageObjects;
-import pageObjects.Run_PythonCodes;
 import pageObjects.Signinpageobjects;
-import pageObjects.TreePageObjects;
+import utils.ExcelReader;
 
 public class QueueTest extends TestBase {
 	Signinpageobjects signinpage;
 	QueuePageObjects queuepage;
 	ExcelReader excelreader;
 
-	@BeforeMethod()
+
+	//@Test(dataProvider = "data-provider-valid-username-password", dataProviderClass = CommonDataProvider.class)
+	@BeforeMethod
 	public void login() {
+
+		test = extent.createTest("Test cases from the Queue module");
 		signinpage = new Signinpageobjects(driver);
 		signinpage.click_signin_link();
 		signinpage.enter_username("ninjatesterss");
@@ -32,6 +39,7 @@ public class QueueTest extends TestBase {
 
 	// @BeforeMethod(dataProvider = "Logindataprovider" ,
 	// dataProviderClass=TestBase.class)
+
 //	public void tc01_loginusingdataprovider(String username, String password) 
 //	{
 //		signinpage = new Signinpageobjects(driver);
@@ -40,15 +48,15 @@ public class QueueTest extends TestBase {
 //		driver.findElement(By.id("id_password")).sendKeys(password);
 //		signinpage.click_login_btn();	
 //	}
-	// @Test
-//	public void tc01_queueTopics() {
-//		QueuePageObjects queuepage = new QueuePageObjects(driver);
-	// queuepage.queueTopicsCovered();
-//		List<String> Expected_list = QueueTopics.asList();
-//		List<String> Actual_list = queuepage.queue_topicscovered_list();
-//		System.out.println("Expected List is:" + Expected_list);
-//		System.out.println("Actual List is:" + Actual_list);
-//	}
+ @Test(retryAnalyzer=logic.RetryAnalyzer.class)
+	public void tc01_queueTopics() {
+		QueuePageObjects queuepage = new QueuePageObjects(driver);
+	 queuepage.queueTopicsCovered();
+		List<String> Expected_list = Arrays.asList("Implementation of Queue in Python","Implementation using collections.deque","Implementation using array","Queue Operations");
+		List<String> Actual_list = queuepage.queue_topicscovered_list();
+		System.out.println("Expected List is:" + Expected_list);
+		System.out.println("Actual List is:" + Actual_list);
+	}
 
 	@Test
 	public void tc02_ImplementationOfQueue() {
@@ -69,24 +77,20 @@ public class QueueTest extends TestBase {
 
 	}
 
-	@Test
-	@Parameters({ "sheetName", "validCodeRow", "codeColumn" })
-	public void tc04_ValidCode(String sheetName, Integer validCodeRow, Integer codeColumn) {
-
+	@Test(dataProvider = "data-provider-valid-code", dataProviderClass = CommonDataProvider.class)
+	public void tc04_ValidCode(String code) {
+		System.out.println(code);
 		queuepage.linkImplementationOfQueueInPython();
 		queuepage.tryhere();
-		String validCode = ExcelReader.getExcelValue(sheetName, validCodeRow, codeColumn);
-		queuepage.actionCode(validCode);
-
+		queuepage.actionCode(code);
 	}
 
-	@Test
-	@Parameters({ "sheetName", "invalidCodeRow", "codeColumn" })
-	public void tc05_InvalidCode(String sheetName, Integer invalidCodeRow, Integer codeColumn) {
+	@Test(dataProvider = "data-provider-invalid-code", dataProviderClass = CommonDataProvider.class)
+	
+	public void tc05_InvalidCode(String code) {
 		queuepage.linkImplementationOfQueueInPython();
 		queuepage.tryhere();
-		String InvalidCode = ExcelReader.getExcelValue(sheetName, invalidCodeRow, codeColumn);
-		queuepage.actionCode(InvalidCode);
+		queuepage.actionCode(code);
 	}
 
 	@Test
@@ -120,26 +124,20 @@ public class QueueTest extends TestBase {
 
 	}
 
-	@Test
-	@Parameters({ "sheetName", "validCodeRow", "codeColumn" })
-	public void tc09_ValidCode(String sheetName, Integer validCodeRow, Integer codeColumn) {
+	@Test(dataProvider = "data-provider-valid-code", dataProviderClass = CommonDataProvider.class)
+	
+	public void tc09_ValidCode(String code) {
 		queuepage.linkImplementationUsingCollections();
 		queuepage.tryhere();
-
-		String validCode = ExcelReader.getExcelValue(sheetName, validCodeRow, codeColumn);
-//		
-		queuepage.actionCode(validCode);
+		queuepage.actionCode(code);
 
 	}
 
-	@Test
-	@Parameters({ "sheetName", "invalidCodeRow", "codeColumn" })
-	public void tc10_InvalidCode(String sheetName, Integer invalidCodeRow, Integer codeColumn) {
+	@Test(dataProvider = "data-provider-invalid-code", dataProviderClass = CommonDataProvider.class)
+	public void tc10_InvalidCode(String code) {
 		queuepage.linkImplementationUsingCollections();
 		queuepage.tryhere();
-		ExcelReader excelReader = new ExcelReader();
-		String InvalidCode = excelReader.getExcelValue(sheetName, invalidCodeRow, codeColumn);
-		queuepage.actionCode(InvalidCode);
+		queuepage.actionCode(code);
 	}
 
 	@Test
@@ -173,28 +171,21 @@ public class QueueTest extends TestBase {
 
 	}
 
-	@Test
-	@Parameters({ "sheetName", "validCodeRow", "codeColumn" })
-	public void tc14_ValidCode(String sheetName, Integer validCodeRow, Integer codeColumn) {
+	@Test(dataProvider = "data-provider-valid-code", dataProviderClass = CommonDataProvider.class)
+	public void tc14_ValidCode(String code) {
 		queuepage.linkImplementationUsingArray();
 		queuepage.tryhere();
 
-		String validCode = ExcelReader.getExcelValue(sheetName, validCodeRow, codeColumn);
-//		 sheetName="Code";
-//		 rownumber=1;
-//		 columnumber=1;
-		queuepage.actionCode(validCode);
+		
+		queuepage.actionCode(code);
 
 	}
 
-	@Test
-	@Parameters({ "sheetName", "invalidCodeRow", "codeColumn" })
-	public void tc15_InvalidCode(String sheetName, Integer invalidCodeRow, Integer codeColumn) {
+	@Test(dataProvider = "data-provider-invalid-code", dataProviderClass = CommonDataProvider.class)
+	public void tc15_InvalidCode(String code) {
 		queuepage.linkImplementationUsingArray();
 		queuepage.tryhere();
-
-		String InvalidCode = ExcelReader.getExcelValue(sheetName, invalidCodeRow, codeColumn);
-		queuepage.actionCode(InvalidCode);
+		queuepage.actionCode(code);
 	}
 
 	@Test
@@ -228,27 +219,19 @@ public class QueueTest extends TestBase {
 
 	}
 
-	@Test
-	@Parameters({ "sheetName", "validCodeRow", "codeColumn" })
-	public void tc19_ValidCode(String sheetName, Integer validCodeRow, Integer codeColumn) {
+	@Test(dataProvider = "data-provider-valid-code", dataProviderClass = CommonDataProvider.class)
+	public void tc19_ValidCode(String code) {
 		queuepage.linkQueueOperations();
 		queuepage.tryhere();
-
-		String validCode = ExcelReader.getExcelValue(sheetName, validCodeRow, codeColumn);
-		 
-		queuepage.actionCode(validCode);
+		queuepage.actionCode(code);
 
 	}
 
-	@Test
-	@Parameters({ "sheetName", "invalidCodeRow", "codeColumn" })
-	public void tc120_InvalidCode(String sheetName, Integer invalidCodeRow, Integer codeColumn) {
+	@Test(dataProvider = "data-provider-valid-code", dataProviderClass = CommonDataProvider.class)
+	public void tc120_InvalidCode(String code) {
 		queuepage.linkQueueOperations();
 		queuepage.tryhere();
-
-		String InvalidCode = ExcelReader.getExcelValue(sheetName, invalidCodeRow, codeColumn);
-		
-		queuepage.actionCode(InvalidCode);
+		queuepage.actionCode(code);
 	}
 
 	@Test
@@ -262,6 +245,7 @@ public class QueueTest extends TestBase {
 		queuepage.contents();
 
 	}
+
 	@Test
 	public void tc22_QueuePractice() {
 		queuepage.linkQueueOperations();
@@ -269,20 +253,15 @@ public class QueueTest extends TestBase {
 		String actualtitle = queuepage.get_Title();
 		String expectedtitle = "Practice Questions";
 		assertEquals(expectedtitle, actualtitle);
-		
 
 	}
-	
-	@Test
+
+	@Test(retryAnalyzer = logic.RetryAnalyzer.class)
 	public void tc23_QueuePractice() {
 		queuepage.linkQueueOperations();
 		queuepage.PracticeQuestion();
 		queuepage.practiceQuestionDisplayed();
-		
-		
 
 	}
-
-
 
 }
